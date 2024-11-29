@@ -1,56 +1,71 @@
-from typing import List, Dict
+from typing import Dict, List
 from ..client import ApiClient
+from ..schemas.messages import CreateMessageRequest, Message, ListMessagesResponse
+from ..utils.validators import validate_request, validate_response
+from ..utils.exceptions import handle_exceptions
 from ..utils.logger import logger
 
 
 class Messages:
     """
-    A class to manage message-related API operations.
+    Messages SDK module for managing messages via the API.
+
+    Provides methods for sending, listing, and retrieving messages.
     """
 
     def __init__(self, client: ApiClient):
+        """
+        Initialize the Messages module.
+
+        Args:
+            client (ApiClient): The shared API client instance.
+        """
         self.client = client
 
-    def send_message(self, to: str, content: str, sender: str) -> Dict:
+    @validate_request(CreateMessageRequest)
+    @validate_response(Message)
+    @handle_exceptions
+    def send_message(self, payload: Dict) -> Message:
         """
-        Sends a new message.
+        Send a new message to a contact.
 
         Args:
-            to (str): The recipient's contact ID or phone number.
-            content (str): The text content of the message.
-            sender (str): The sender's phone number.
+            payload (dict): A dictionary containing 'to', 'content', and 'sender'.
 
         Returns:
-            dict: The sent message details.
+            Message: The details of the sent message.
         """
-        logger.info(f"Sending message from {sender} to {to}")
-        payload = {"to": to, "content": content, "from": sender}
+        logger.info(f"Sending message with payload: {payload}")
         return self.client.request("POST", "/messages", json=payload)
 
-    def list_messages(self, page: int = 1, limit: int = 10) -> List[Dict]:
+    @validate_response(ListMessagesResponse)
+    @handle_exceptions
+    def list_messages(self, page: int = 1, limit: int = 10) -> ListMessagesResponse:
         """
-        Lists sent messages with pagination.
+        List all sent messages with pagination.
 
         Args:
-            page (int): The page number.
-            limit (int): The maximum number of messages per page.
+            page (int): The page number to retrieve. Defaults to 1.
+            limit (int): The maximum number of messages per page. Defaults to 10.
 
         Returns:
-            list: A list of sent message details.
+            ListMessagesResponse: A paginated list of sent messages.
         """
-        logger.info(f"Listing messages: page={page}, limit={limit}")
         params = {"page": page, "limit": limit}
+        logger.info(f"Listing messages with params: {params}")
         return self.client.request("GET", "/messages", params=params)
 
-    def get_message(self, message_id: str) -> Dict:
+    @validate_response(Message)
+    @handle_exceptions
+    def get_message(self, message_id: str) -> Message:
         """
-        Retrieves a message by ID.
+        Retrieve a specific message by ID.
 
         Args:
             message_id (str): The unique ID of the message.
 
         Returns:
-            dict: The message details.
+            Message: The retrieved message details.
         """
         logger.info(f"Fetching message with ID: {message_id}")
         return self.client.request("GET", f"/messages/{message_id}")

@@ -1,82 +1,103 @@
-from typing import List, Dict
+from typing import Dict, List
 from ..client import ApiClient
+from ..schemas.contacts import CreateContactRequest, Contact, ListContactsResponse
+from ..utils.validators import validate_request, validate_response
+from ..utils.exceptions import handle_exceptions
 from ..utils.logger import logger
 
 
 class Contacts:
     """
-    A class to manage contact-related API operations.
+    Contacts SDK module for managing contacts via the API.
+
+    Provides methods for creating, listing, retrieving, updating, and deleting contacts.
     """
 
     def __init__(self, client: ApiClient):
+        """
+        Initialize the Contacts module.
+
+        Args:
+            client (ApiClient): The shared API client instance.
+        """
         self.client = client
 
-    def create_contact(self, name: str, phone: str) -> Dict:
+    @validate_request(CreateContactRequest)
+    @validate_response(Contact)
+    @handle_exceptions
+    def create_contact(self, payload: Dict) -> Contact:
         """
-        Creates a new contact.
+        Create a new contact in the system.
 
         Args:
-            name (str): The contact's name.
-            phone (str): The contact's phone number.
+            payload (dict): A dictionary containing 'name' and 'phone'.
 
         Returns:
-            dict: The created contact details.
+            Contact: The created contact details.
         """
-        logger.info(f"Creating contact: {name}, {phone}")
-        payload = {"name": name, "phone": phone}
+        logger.info(f"Creating contact with payload: {payload}")
         return self.client.request("POST", "/contacts", json=payload)
 
-    def list_contacts(self, page: int = 1, max: int = 10) -> List[Dict]:
+    @validate_response(ListContactsResponse)
+    @handle_exceptions
+    def list_contacts(self, page: int = 1, max: int = 10) -> ListContactsResponse:
         """
-        Lists existing contacts with pagination.
+        List all contacts with pagination.
 
         Args:
-            page (int): The page number.
-            max (int): The maximum number of contacts per page.
+            page (int): The page number to retrieve. Defaults to 1.
+            max (int): The maximum number of contacts per page. Defaults to 10.
 
         Returns:
-            list: A list of contact details.
+            ListContactsResponse: A paginated list of contacts.
         """
-        logger.info(f"Listing contacts: page={page}, max={max}")
         params = {"pageIndex": page, "max": max}
+        logger.info(f"Listing contacts with params: {params}")
         return self.client.request("GET", "/contacts", params=params)
 
-    def get_contact(self, contact_id: str) -> Dict:
+    @validate_response(Contact)
+    @handle_exceptions
+    def get_contact(self, contact_id: str) -> Contact:
         """
-        Retrieves a contact by ID.
+        Retrieve a specific contact by ID.
 
         Args:
             contact_id (str): The unique ID of the contact.
 
         Returns:
-            dict: The contact details.
+            Contact: The retrieved contact details.
         """
         logger.info(f"Fetching contact with ID: {contact_id}")
         return self.client.request("GET", f"/contacts/{contact_id}")
 
-    def update_contact(self, contact_id: str, name: str, phone: str) -> Dict:
+    @validate_request(CreateContactRequest)
+    @validate_response(Contact)
+    @handle_exceptions
+    def update_contact(self, contact_id: str, payload: Dict) -> Contact:
         """
-        Updates a contact's details.
+        Update the details of an existing contact.
 
         Args:
             contact_id (str): The unique ID of the contact.
-            name (str): The updated name.
-            phone (str): The updated phone number.
+            payload (dict): A dictionary containing 'name' and/or 'phone'.
 
         Returns:
-            dict: The updated contact details.
+            Contact: The updated contact details.
         """
-        logger.info(f"Updating contact {contact_id}: {name}, {phone}")
-        payload = {"name": name, "phone": phone}
+        logger.info(f"Updating contact {contact_id} with payload: {payload}")
         return self.client.request("PATCH", f"/contacts/{contact_id}", json=payload)
 
+    @handle_exceptions
     def delete_contact(self, contact_id: str) -> None:
         """
-        Deletes a contact by ID.
+        Delete a contact by ID.
 
         Args:
             contact_id (str): The unique ID of the contact.
+
+        Returns:
+            None
         """
         logger.info(f"Deleting contact with ID: {contact_id}")
         self.client.request("DELETE", f"/contacts/{contact_id}")
-        logger.info(f"Contact {contact_id} deleted successfully.")
+        logger.info(f"Successfully deleted contact with ID: {contact_id}")
