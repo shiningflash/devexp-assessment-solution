@@ -1,0 +1,7 @@
+requests
+python-dotenv
+pytest
+pytest-mock
+flake8
+black
+mypy
