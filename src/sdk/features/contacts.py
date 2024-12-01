@@ -38,6 +38,7 @@ class Contacts:
         logger.info(f"Creating contact with payload: {payload}")
         return self.client.request("POST", "/contacts", json=payload)
 
+
     @validate_response(ListContactsResponse)
     @handle_exceptions
     def list_contacts(self, page: int = 1, max: int = 10) -> ListContactsResponse:
@@ -99,5 +100,6 @@ class Contacts:
             None
         """
         logger.info(f"Deleting contact with ID: {contact_id}")
-        self.client.request("DELETE", f"/contacts/{contact_id}")
+        response = self.client.request("DELETE", f"/contacts/{contact_id}")
         logger.info(f"Successfully deleted contact with ID: {contact_id}")
+        return response
