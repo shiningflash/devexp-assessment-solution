@@ -46,11 +46,13 @@ jobs:
       - name: Run tests with coverage
         run: |
           source venv/bin/activate                # Ensure the virtual environment is active
-          pytest --cov=src --cov-report=xml --cov-report=term
+          pytest --maxfail=3 --disable-warnings --cov=src --cov-report=xml --cov-report=term
 
-      # Step 5: Post coverage summary as PR comment
-      - name: Post coverage summary as PR comment
+      # Step 5: Post coverage summary as a PR comment
+      - name: Post coverage summary
         if: github.event_name == 'pull_request'
-        uses: machine-learning-apps/pytest-coverage-comment@v1.0.0
+        uses: mikepenz/comment-action@v2
         with:
-          pytest-cov-path: coverage.xml
+          message: |
+            ## Test Coverage Summary
+            $(cat coverage.xml | sed -n '/<coverage/,/<\/coverage>/p' | sed -e 's/<[^>]*>//g' | head -n 10)
