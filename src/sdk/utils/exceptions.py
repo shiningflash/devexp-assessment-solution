@@ -53,7 +53,7 @@ class ServerError(ApiError):
         logger.error("[ServerError] The server encountered an issue.")
 
 
-class ValidationError(ApiError):
+class PayloadValidationError(ApiError):
     """
     Exception raised for validation errors in payloads or responses.
 
@@ -64,7 +64,7 @@ class ValidationError(ApiError):
     def __init__(self, message: str = "Validation failed.", errors: list = None):
         super().__init__(message)
         self.errors = errors or []
-        logger.error(f"[ValidationError] {message}")
+        logger.error(f"[PayloadValidationError] {message}")
         if self.errors:
             for error in self.errors:
                 logger.error(f"Validation Detail: Field - {error['loc']}, Error - {error['msg']}")
@@ -87,7 +87,10 @@ class TransientError(ApiError):
 
     def __init__(self, message: str = "Transient server error. Please retry.", status_code: int = None):
         super().__init__(message, status_code=status_code)
-        logger.warning(f"[TransientError] {message} (HTTP {status_code})")
+        if status_code:
+            logger.warning(f"[TransientError] {message} (HTTP {status_code})")
+        else:
+            logger.warning(f"[TransientError] {message}")
 
 
 def handle_exceptions(func):

@@ -6,3 +6,4 @@ flake8
 black
 mypy
 pydantic
+pytest-cov
