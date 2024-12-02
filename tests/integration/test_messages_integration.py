@@ -11,7 +11,7 @@ def test_send_message_success(messages, mock_api_client):
         "from": "+987654321",
         "content": "Hello, World!",
         "sender": "Sender123",
-        "status": "sent",
+        "status": "delivered",
         "createdAt": "2024-12-01T00:00:00Z"
     }
     mock_api_client.request.return_value = mock_response
@@ -63,7 +63,7 @@ def test_list_messages_success(messages, mock_api_client):
                 "from": "+987654321",
                 "content": "Hello, World!",
                 "sender": "Sender123",
-                "status": "sent",
+                "status": "delivered",
                 "createdAt": "2024-12-01T00:00:00Z"
             }
         ]
@@ -98,7 +98,7 @@ def test_get_message_success(messages, mock_api_client):
         "from": "+987654321",
         "content": "Hello, World!",
         "sender": "Sender123",
-        "status": "sent",
+        "status": "delivered",
         "createdAt": "2024-12-01T00:00:00Z"
     }
     mock_api_client.request.return_value = mock_response

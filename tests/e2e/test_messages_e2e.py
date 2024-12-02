@@ -12,7 +12,7 @@ def test_send_message_and_verify(mock_api_client, messages):
         "to": "+123456789",
         "from": "+987654321",
         "content": "Hello, World!",
-        "status": "sent",
+        "status": "delivered",
         "createdAt": "2024-12-01T00:00:00Z",
     }
     mock_api_client.request.return_value = send_response
@@ -28,7 +28,7 @@ def test_send_message_and_verify(mock_api_client, messages):
         "to": "+123456789",
         "from": "+987654321",
         "content": "Hello, World!",
-        "status": "sent",
+        "status": "delivered",
         "createdAt": "2024-12-01T00:00:00Z",
     }
     mock_api_client.request.return_value = retrieve_response
@@ -55,7 +55,7 @@ def test_list_messages_with_pagination(mock_api_client, messages):
                 "to": "+123456789",
                 "from": "+987654321",
                 "content": "Hello, World!",
-                "status": "sent",
+                "status": "delivered",
                 "createdAt": "2024-12-01T00:00:00Z",
             },
             {
@@ -109,7 +109,7 @@ def test_resend_failed_message(mock_api_client, messages):
         "to": "+123456789",
         "from": "+987654321",
         "content": "Hello, World!",
-        "status": "sent",
+        "status": "delivered",
         "createdAt": "2024-12-01T00:00:00Z",
     }
     mock_api_client.request.return_value = resend_response
