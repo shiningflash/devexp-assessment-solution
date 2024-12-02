@@ -122,7 +122,7 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
    ```
    
 #### Comprehensive User Guide for **[SDK Usage](docs/sdk_usage.md)**
-For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usage.md)**.
+For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usage.md)** 👈.
 
 ### Webhook Setup
 1. Run the webhook server:
@@ -133,7 +133,7 @@ For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usa
 2. Configure the API to send events to your webhook endpoint (e.g., `http://localhost:3010/webhooks`).
 
 #### Comprehensive User Guide for **[Webhook](docs/webhook_guide.md)**
-For detailed usage and examples, please refer to the [User Guide](docs/webhook_guide.md).
+For detailed usage and examples, please refer to the **[User Guide](docs/webhook_guide.md)** 👈.
 
 ---
 
