@@ -6,20 +6,42 @@
 #
 annotated-types==0.7.0
     # via pydantic
+anyio==4.6.2.post1
+    # via
+    #   httpx
+    #   starlette
 black==24.10.0
     # via -r requirements.in
 certifi==2024.8.30
-    # via requests
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
 charset-normalizer==3.4.0
     # via requests
 click==8.1.7
-    # via black
+    # via
+    #   black
+    #   uvicorn
 coverage[toml]==7.6.8
     # via pytest-cov
+fastapi==0.115.5
+    # via -r requirements.in
 flake8==7.1.1
     # via -r requirements.in
+h11==0.14.0
+    # via
+    #   httpcore
+    #   uvicorn
+httpcore==1.0.7
+    # via httpx
+httpx==0.28.0
+    # via -r requirements.in
 idna==3.10
-    # via requests
+    # via
+    #   anyio
+    #   httpx
+    #   requests
 iniconfig==2.0.0
     # via pytest
 mccabe==0.7.0
@@ -43,28 +65,45 @@ pluggy==1.5.0
 pycodestyle==2.12.1
     # via flake8
 pydantic==2.10.2
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   fastapi
+    #   pydantic-settings
 pydantic-core==2.27.1
     # via pydantic
+pydantic-settings==2.6.1
+    # via -r requirements.in
 pyflakes==3.2.0
     # via flake8
 pytest==8.3.3
     # via
     #   -r requirements.in
+    #   pytest-asyncio
     #   pytest-cov
     #   pytest-mock
+pytest-asyncio==0.24.0
+    # via -r requirements.in
 pytest-cov==6.0.0
     # via -r requirements.in
 pytest-mock==3.14.0
     # via -r requirements.in
 python-dotenv==1.0.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   pydantic-settings
 requests==2.32.3
     # via -r requirements.in
+sniffio==1.3.1
+    # via anyio
+starlette==0.41.3
+    # via fastapi
 typing-extensions==4.12.2
     # via
+    #   fastapi
     #   mypy
     #   pydantic
     #   pydantic-core
 urllib3==2.2.3
     # via requests
+uvicorn==0.32.1
+    # via -r requirements.in

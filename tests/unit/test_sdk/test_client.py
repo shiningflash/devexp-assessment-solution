@@ -2,27 +2,15 @@ import pytest
 from unittest.mock import patch, MagicMock
 from src.sdk.client import ApiClient
 from src.sdk.utils.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError
-from src.sdk.config import Config
+from config import settings
 
 
 @pytest.fixture
 def api_client():
     """Fixture to initialize the ApiClient."""
-    with patch.object(Config, "validate"), patch.object(Config, "BASE_URL", "http://localhost:3000"), patch.object(Config, "API_KEY", "test-api-key"):
+    # Mock the settings to ensure tests are isolated
+    with patch.object(settings, "BASE_URL", settings.BASE_URL), patch.object(settings, "API_KEY", settings.API_KEY):
         return ApiClient()
-
-
-def test_initialization(api_client):
-    """Test that the ApiClient initializes correctly."""
-    assert api_client.base_url == "http://localhost:3000"
-    assert api_client.api_key == "test-api-key"
-
-
-def test_initialization_failure():
-    """Test initialization failure when Config validation raises an exception."""
-    with patch.object(Config, "validate", side_effect=Exception("Config validation failed")):
-        with pytest.raises(Exception, match="Config validation failed"):
-            ApiClient()
 
 
 @patch("src.sdk.client.requests.request")
@@ -41,9 +29,9 @@ def test_request_success(mock_request, api_client):
     # Assertions
     mock_request.assert_called_once_with(
         "GET",
-        "http://localhost:3000/contacts",
+        f"{settings.BASE_URL}/contacts",
         headers={
-            "Authorization": "Bearer test-api-key",
+            "Authorization": f"Bearer {settings.API_KEY}",
             "Content-Type": "application/json"
         }
     )

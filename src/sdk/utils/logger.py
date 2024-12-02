@@ -2,29 +2,46 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
-# Ensure the logs directory exists
+# Ensure logs directory exists
 log_dir = "logs"
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir)
+os.makedirs(log_dir, exist_ok=True)
 
-# Create a logger
-logger = logging.getLogger("sdk_logger")
-logger.setLevel(logging.DEBUG)
+# Central logger
+def get_logger(context="sdk"):
+    """
+    Get a logger with a specific context.
 
-# Console handler for info and error
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
-console_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-console_handler.setFormatter(console_format)
+    Args:
+        context (str): Context for the logger (e.g., 'sdk', 'webhooks').
 
-# File handler for all logs
-file_handler = RotatingFileHandler(
-    os.path.join(log_dir, "app.log"), maxBytes=5 * 1024 * 1024, backupCount=3
-)
-file_handler.setLevel(logging.WARNING)
-file_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-file_handler.setFormatter(file_format)
+    Returns:
+        logging.Logger: Configured logger instance.
+    """
+    logger = logging.getLogger(f"logger.{context}")
+    logger.setLevel(logging.DEBUG)
 
-# Add handlers to logger
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+    # Console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_format = logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s")
+    console_handler.setFormatter(console_format)
+
+    # File handler
+    file_handler = RotatingFileHandler(
+        os.path.join(log_dir, "app.log"), maxBytes=5 * 1024 * 1024, backupCount=3
+    )
+    file_handler.setLevel(logging.WARNING)
+    file_format = logging.Formatter("%(asctime)s - %(levelname)s - %(name)s - %(message)s")
+    file_handler.setFormatter(file_format)
+
+    # Add handlers if not already added
+    if not logger.hasHandlers():
+        logger.addHandler(console_handler)
+        logger.addHandler(file_handler)
+
+    return logger
+
+
+# Create loggers for SDK and Webhook
+logger = get_logger("sdk")
+webhook_logger = get_logger("webhooks")

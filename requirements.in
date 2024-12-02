@@ -7,3 +7,8 @@ black
 mypy
 pydantic
 pytest-cov
+fastapi
+uvicorn
+pytest-asyncio
+httpx
+pydantic-settings

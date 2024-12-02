@@ -1,6 +1,6 @@
 import requests
 from typing import Any
-from .config import Config
+from config import settings
 from .utils.logger import logger
 from .utils.requests import handle_request_errors
 from .utils.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError, TransientError
@@ -17,10 +17,9 @@ class ApiClient:
         """
         Initialize the API client with configuration and authentication details.
         """
-        # Validate configuration
-        Config.validate()
-        self.base_url = Config.BASE_URL
-        self.api_key = Config.API_KEY
+        self.base_url = settings.BASE_URL
+        self.api_key = settings.API_KEY
+
 
     def _handle_api_errors(self, response: requests.Response) -> None:
         """
@@ -51,6 +50,7 @@ class ApiClient:
         elif not response.ok:
             logger.error(f"Unhandled API Error: {response.status_code} - {response.text}")
             raise ApiError(f"Unhandled API Error: {response.status_code}: {response.text}")
+
 
     @retry(max_retries=3, backoff=2, retry_on=(502, 503))
     @handle_request_errors

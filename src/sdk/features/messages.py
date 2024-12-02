@@ -4,6 +4,7 @@ from ..schemas.messages import CreateMessageRequest, Message, ListMessagesRespon
 from ..utils.validators import validate_request, validate_response
 from ..utils.exceptions import handle_exceptions
 from ..utils.logger import logger
+from ..utils.validators import verify_signature
 
 
 class Messages:
@@ -69,3 +70,19 @@ class Messages:
         """
         logger.info(f"Fetching message with ID: {message_id}")
         return self.client.request("GET", f"/messages/{message_id}")
+    
+    
+    def validate_webhook_signature(self, raw_body: bytes, signature: str, secret: str):
+        """
+        Validate the webhook signature using the SDK.
+
+        Args:
+            raw_body (bytes): Raw request body from webhook.
+            signature (str): Authorization header containing the signature.
+            secret (str): Secret key for signature validation.
+
+        Raises:
+            ValueError: If the signature validation fails.
+        """
+        logger.info("Validating webhook signature through SDK.")
+        verify_signature(raw_body, signature, secret)
