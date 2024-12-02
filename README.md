@@ -75,6 +75,24 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
      WEBHOOK_SECRET=mySecret
      ```
 
+4. **Browse the API:**
+   - The repository includes an **OpenAPI Specification** file located at: `./docs/openapi.yaml`. This file describes the API's endpoints and can be viewed using tools like **SwaggerUI** or **Redocly**.
+
+   - To explore the API visually, you can use Docker to run the provided tools:
+     1. Ensure Docker is installed on your machine.
+     2. Start the servers:
+        ```bash
+        docker compose up
+        ```
+        (If prompted, update the Docker images using `docker compose pull`).
+
+     3. The following servers will be available:
+        - **Swagger UI**: [http://localhost:8080](http://localhost:8080)
+        - **Redocly**: [http://localhost:8090](http://localhost:8090)
+        - **API Server**: [http://localhost:3000](http://localhost:3000) (uses a local database).
+
+     You can use either SwaggerUI or Redocly to browse and understand the API endpoints.
+
 ---
 
 ## Usage Guide
