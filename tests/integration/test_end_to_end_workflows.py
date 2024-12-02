@@ -13,7 +13,7 @@ def test_send_and_check_message_workflow(messages, mock_api_client):
         "from": "+987654321",
         "content": "Hello, World!",
         "sender": "+987654321",
-        "status": "sent",
+        "status": "delivered",
         "createdAt": "2024-12-01T00:00:00Z",
     }
     mock_api_client.request.return_value = sent_message_response
@@ -64,7 +64,7 @@ def test_list_contacts_and_messages_workflow(contacts, messages, mock_api_client
                 "to": "+123456789",
                 "from": "+987654321",
                 "content": "Hello, World!",
-                "status": "sent",
+                "status": "delivered",
                 "createdAt": "2024-12-01T00:00:00Z",
             }
         ],
