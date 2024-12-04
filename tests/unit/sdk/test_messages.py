@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import MagicMock, patch
 from src.sdk.features.messages import Messages
 from src.sdk.client import ApiClient
-from src.sdk.utils.exceptions import UnauthorizedError, NotFoundError, ApiError, PayloadValidationError
+from src.common.exceptions import UnauthorizedError, NotFoundError, ApiError, PayloadValidationError
 from src.sdk.schemas.messages import CreateMessageRequest
 
 

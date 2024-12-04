@@ -5,7 +5,7 @@ import hashlib
 from pydantic import ValidationError
 from functools import wraps
 from typing import Any, Callable
-from ..utils.logger import logger
+from .logger import logger
 
 
 def validate_request(model: Any):

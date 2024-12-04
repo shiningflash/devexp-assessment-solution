@@ -1,9 +1,9 @@
 from typing import Dict, List
 from ..client import ApiClient
 from ..schemas.contacts import CreateContactRequest, Contact, ListContactsResponse
-from ..utils.validators import validate_request, validate_response
-from ..utils.exceptions import handle_exceptions
-from ..utils.logger import logger
+from src.common.validators import validate_request, validate_response
+from src.common.exceptions import handle_exceptions
+from src.common.logger import logger
 
 
 class Contacts:

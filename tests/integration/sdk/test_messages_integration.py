@@ -1,5 +1,5 @@
 import pytest
-from src.sdk.utils.exceptions import ApiError, NotFoundError, UnauthorizedError
+from src.common.exceptions import ApiError, NotFoundError, UnauthorizedError
 
 def test_send_message_success(messages, mock_api_client):
     """
