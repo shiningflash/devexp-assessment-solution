@@ -109,8 +109,9 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
    print(response)
    ```
    
-#### Comprehensive User Guide for **[SDK Usage](docs/sdk_usage.md)**
-For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usage.md)** 👈.
+#### Comprehensive User Guide for SDK Usage
+
+[![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](docs/sdk_usage.md)
 
 ### Webhook Setup
 1. Run the webhook server:
@@ -120,8 +121,9 @@ For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usa
 
 2. Configure the API to send events to your webhook endpoint (e.g., `http://localhost:3010/webhooks`).
 
-#### Comprehensive User Guide for **[Webhook](docs/webhook_guide.md)**
-For detailed usage and examples, please refer to the **[User Guide](docs/webhook_guide.md)** 👈.
+#### Comprehensive User Guide for Webhook
+
+[![Webhook Documentation](https://img.shields.io/badge/Docs-Webhook%20Guide-blue?style=for-the-badge)](docs/webhook_guide.md)
 
 ---
 
