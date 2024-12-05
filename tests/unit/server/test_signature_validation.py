@@ -3,9 +3,10 @@ import hmac
 import hashlib
 import json
 
-from config import settings
-from src.common.validators import verify_signature
-from src.common.validators import generate_signature
+from src.core.config import settings
+from src.core.security import verify_signature
+from src.core.security import generate_signature
+from src.schemas.errors import UnauthorizedError
 
 
 def test_valid_signature():
@@ -16,12 +17,17 @@ def test_valid_signature():
 
 def test_invalid_signature():
     payload = {"id": "msg123", "status": "delivered"}
+    serialized_payload = json.dumps(payload, separators=(",", ":")).encode("utf-8")
     invalid_signature = "invalidsignature"
-    with pytest.raises(ValueError, match="Signature validation failed."):
-        verify_signature(payload, invalid_signature, settings.WEBHOOK_SECRET)
+
+    with pytest.raises(UnauthorizedError, match="Unauthorized: Signature validation failed."):
+        verify_signature(serialized_payload, invalid_signature, settings.WEBHOOK_SECRET)
 
 def test_empty_signature():
     payload = {"id": "msg123", "status": "delivered"}
+    serialized_payload = json.dumps(payload, separators=(",", ":")).encode("utf-8")
     empty_signature = ""
-    with pytest.raises(ValueError, match="Signature validation failed."):
-        verify_signature(payload, empty_signature, settings.WEBHOOK_SECRET)
+
+    with pytest.raises(UnauthorizedError, match="Unauthorized: Signature validation failed."):
+        verify_signature(serialized_payload, empty_signature, settings.WEBHOOK_SECRET)
+

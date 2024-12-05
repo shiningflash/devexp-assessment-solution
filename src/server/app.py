@@ -1,7 +1,7 @@
 import json
 
 from fastapi import FastAPI, HTTPException, Header, Request
-from config import settings
+from src.core.config import settings
 from src.sdk.client import ApiClient
 from src.schemas.webhook import WebhookPayload
 from src.sdk.features.messages import Messages

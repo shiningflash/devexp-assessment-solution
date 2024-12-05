@@ -1,6 +1,6 @@
 import requests
 from typing import Any
-from config import settings
+from src.core.config import settings
 from src.core.logger import logger
 from src.core.requests import handle_request_errors
 from src.core.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError, TransientError

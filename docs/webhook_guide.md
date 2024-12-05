@@ -74,7 +74,7 @@ The SDK provides a `verify_signature` utility to validate the HMAC signature. He
 Example Code:
 
 ```python
-from src.common.validators import verify_signature
+from src.core.security import verify_signature
 
 try:
     verify_signature(message=raw_payload, signature=auth_header, secret=WEBHOOK_SECRET)

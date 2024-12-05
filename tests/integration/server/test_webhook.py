@@ -1,8 +1,8 @@
 import json
 from fastapi.testclient import TestClient
-from config import settings
+from src.core.config import settings
 from src.server.app import app
-from src.common.validators import generate_signature
+from src.core.security import generate_signature
 
 client = TestClient(app)
 
