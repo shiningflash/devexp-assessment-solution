@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict
 from httpx import HTTPStatusError
 
 from ..client import ApiClient
