@@ -1,10 +1,12 @@
 from typing import Dict, List
+from httpx import HTTPStatusError
+
 from ..client import ApiClient
-from ..schemas.messages import CreateMessageRequest, Message, ListMessagesResponse
-from src.common.validators import validate_request, validate_response
-from src.common.exceptions import handle_exceptions
-from src.common.logger import logger
-from src.common.validators import verify_signature
+from src.schemas.messages import CreateMessageRequest, Message, ListMessagesResponse
+from src.core.validators import validate_request, validate_response
+from src.core.exceptions import handle_exceptions, handle_404_error
+from src.core.logger import logger
+from src.core.security import verify_signature
 
 
 class Messages:
@@ -69,7 +71,10 @@ class Messages:
             Message: The retrieved message details.
         """
         logger.info(f"Fetching message with ID: {message_id}")
-        return self.client.request("GET", f"/messages/{message_id}")
+        try:
+            return self.client.request("GET", f"/messages/{message_id}")
+        except HTTPStatusError as e:
+            handle_404_error(e, message_id, "Message")
     
     
     def validate_webhook_signature(self, raw_body: bytes, signature: str, secret: str):
