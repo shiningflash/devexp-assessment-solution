@@ -64,28 +64,22 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
    ```
 
 3. Configure environment variables:
-   - Copy `.env.example` to `.env`:
-     ```bash
-     cp .env.example .env
-     ```
+   - Copy `.env.example` to `.env`: `cp .env.example .env`
    - Edit `.env` and adjust the values.
 
 4. Browse the API:
-   - The repository includes an **OpenAPI Specification** file located at: `./docs/openapi.yaml`. This file describes the API's endpoints and can be viewed using tools like **SwaggerUI** or **Redocly**.
-
+   - The repository includes an **OpenAPI Specification** file located at: `./docs/openapi.yaml`.
    - To explore the API visually, you can use Docker to run the provided tools:
      1. Ensure Docker is installed on your machine.
      2. Start the servers: `docker compose up`.
-     3. The following servers will be available:
-        - **Swagger UI**: [http://localhost:8080](http://localhost:8080)
-        - **Redocly**: [http://localhost:8090](http://localhost:8090)
-        - **API Server**: [http://localhost:3000](http://localhost:3000) (uses a local database).
+     3. The following servers will be available: **Swagger UI**: [http://localhost:8080](http://localhost:8080), **Redocly**: [http://localhost:8090](http://localhost:8090), **API Server**: [http://localhost:3000](http://localhost:3000) (uses a local database).
 
 ---
 
 ## Usage Guide
 
 ### SDK Usage
+
 1. Initialize the SDK:
    ```python
    from src.sdk.client import ApiClient
@@ -114,6 +108,7 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
 [![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](docs/sdk_usage.md)
 
 ### Webhook Setup
+
 1. Run the webhook server:
    ```bash
    uvicorn src.server.app:app --reload --port 3010
@@ -164,6 +159,7 @@ A detailed overview of the project structure, including descriptions of key file
 │   │   │   ├── api.py         # API-specific exceptions
 │   │   │   ├── decorators.py  # Decorators for exception handling
 │   │   │   └── resource.py    # Resource-specific exceptions
+│   │   ├── config.py          # Global configuration file for SDK and server
 │   │   ├── logger.py          # Logging utilities
 │   │   ├── requests.py        # Request helpers for SDK
 │   │   ├── retry.py           # Retry logic for transient failures
@@ -210,7 +206,6 @@ A detailed overview of the project structure, including descriptions of key file
 │           └── test_signature_validation.py # Unit tests for signature validation
 ├── venv/                      # Python virtual environment (not versioned)
 ├── .env.example               # Example environment variables
-├── config.py                  # Global configuration file for SDK and server
 ├── docker-compose.yml         # Docker Compose configuration
 ├── pytest.ini                 # Pytest configuration
 ├── requirements.in            # Base Python dependencies
