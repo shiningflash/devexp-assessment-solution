@@ -1,10 +1,10 @@
 import requests
 from typing import Any
-from config import settings
-from src.common.logger import logger
-from ..common.requests import handle_request_errors
-from ..common.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError, TransientError
-from ..common.retry import retry
+from src.core.config import settings
+from src.core.logger import logger
+from src.core.requests import handle_request_errors
+from src.core.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError, TransientError
+from src.core.retry import retry
 
 
 class ApiClient:

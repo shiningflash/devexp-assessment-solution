@@ -171,7 +171,7 @@ The SDK includes comprehensive logging for debugging and auditing. Logs are cate
 Example of enabling logger in your application:
 
 ```python
-from src.common.logger import logger
+from src.core.logger import logger
 
 logger.info("Application started.")
 ```

@@ -1,9 +1,8 @@
 import pytest
-from unittest.mock import MagicMock
 from src.sdk.client import ApiClient
 from src.sdk.features.contacts import Contacts
 from src.sdk.features.messages import Messages
-from unittest.mock import patch, call
+from unittest.mock import patch
 
 
 @pytest.fixture

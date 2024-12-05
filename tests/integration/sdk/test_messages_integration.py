@@ -1,5 +1,5 @@
 import pytest
-from src.common.exceptions import ApiError, NotFoundError, UnauthorizedError
+from src.core.exceptions import ApiError, UnauthorizedError, MessageNotFoundError
 
 def test_send_message_success(messages, mock_api_client):
     """
@@ -112,13 +112,16 @@ def test_get_message_success(messages, mock_api_client):
 
 
 def test_get_message_not_found(messages, mock_api_client):
-    """
-    Test retrieving a message that does not exist.
-    """
-    mock_api_client.request.side_effect = NotFoundError("Message not found.")
+    """Test retrieving a message that does not exist."""
+    # Mock API 404 error response with MessageNotFoundError
+    mock_api_client.request.side_effect = MessageNotFoundError(
+        id="non-existent",
+        message="Message not found."
+    )
 
-    with pytest.raises(NotFoundError, match="Message not found."):
-        messages.get_message("msg999")
+    # Assertions
+    with pytest.raises(MessageNotFoundError, match="Message not found."):
+        messages.get_message(message_id="non-existent")
 
 
 def test_get_message_unauthorized(messages, mock_api_client):

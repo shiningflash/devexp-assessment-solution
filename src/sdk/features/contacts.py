@@ -1,9 +1,11 @@
 from typing import Dict, List
+from httpx import HTTPStatusError
+
 from ..client import ApiClient
-from ..schemas.contacts import CreateContactRequest, Contact, ListContactsResponse
-from src.common.validators import validate_request, validate_response
-from src.common.exceptions import handle_exceptions
-from src.common.logger import logger
+from src.schemas.contacts import CreateContactRequest, Contact, ListContactsResponse
+from src.core.validators import validate_request, validate_response
+from src.core.exceptions import handle_exceptions, handle_404_error
+from src.core.logger import logger
 
 
 class Contacts:
@@ -69,7 +71,10 @@ class Contacts:
             Contact: The retrieved contact details.
         """
         logger.info(f"Fetching contact with ID: {contact_id}")
-        return self.client.request("GET", f"/contacts/{contact_id}")
+        try:
+            return self.client.request("GET", f"/contacts/{contact_id}")
+        except HTTPStatusError as e:
+            handle_404_error(e, contact_id, "Contact")
 
     @validate_request(CreateContactRequest)
     @validate_response(Contact)
@@ -86,7 +91,10 @@ class Contacts:
             Contact: The updated contact details.
         """
         logger.info(f"Updating contact {contact_id} with payload: {payload}")
-        return self.client.request("PATCH", f"/contacts/{contact_id}", json=payload)
+        try:
+            return self.client.request("PATCH", f"/contacts/{contact_id}", json=payload)
+        except HTTPStatusError as e:
+            handle_404_error(e, contact_id, "Contact")
 
     @handle_exceptions
     def delete_contact(self, contact_id: str) -> None:
@@ -100,6 +108,9 @@ class Contacts:
             None
         """
         logger.info(f"Deleting contact with ID: {contact_id}")
-        response = self.client.request("DELETE", f"/contacts/{contact_id}")
-        logger.info(f"Successfully deleted contact with ID: {contact_id}")
-        return response
+        try:
+            response = self.client.request("DELETE", f"/contacts/{contact_id}")
+            logger.info(f"Successfully deleted contact with ID: {contact_id}")
+            return response
+        except HTTPStatusError as e:
+            handle_404_error(e, contact_id, "Contact")
