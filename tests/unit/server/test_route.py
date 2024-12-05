@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from src.server.app import app
 from config import settings
 
-from src.sdk.utils.validators import generate_signature
+from src.common.validators import generate_signature
 
 client = TestClient(app)
 

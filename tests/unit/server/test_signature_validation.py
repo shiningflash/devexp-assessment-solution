@@ -4,8 +4,8 @@ import hashlib
 import json
 
 from config import settings
-from src.sdk.utils.validators import verify_signature
-from src.sdk.utils.validators import generate_signature
+from src.common.validators import verify_signature
+from src.common.validators import generate_signature
 
 
 def test_valid_signature():

@@ -5,8 +5,8 @@ from config import settings
 from ..sdk.client import ApiClient
 from .schemas import WebhookPayload
 from ..sdk.features.messages import Messages
-from ..sdk.utils.validators import verify_signature
-from src.sdk.utils.logger import webhook_logger as logger
+from src.common.validators import verify_signature
+from src.common.logger import webhook_logger as logger
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -19,7 +19,7 @@ messages_sdk = Messages(client=api_client)
 
 @app.post("/webhooks")
 async def handle_webhook(
-    payload: WebhookPayload,  # Ensure FastAPI uses this schema for validation
+    payload: WebhookPayload,
     authorization: str = Header(...),
     request: Request = None,
 ):
