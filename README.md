@@ -52,7 +52,7 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/messaging-sdk.git
+   git clone https://github.com/shiningflash/messaging-sdk.git
    cd messaging-sdk
    ```
 
@@ -64,40 +64,22 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
    ```
 
 3. Configure environment variables:
-   - Copy `.env.example` to `.env`:
-     ```bash
-     cp .env.example .env
-     ```
-   - Edit `.env` and adjust the values:
-     ```env
-     BASE_URL=http://localhost:3000
-     API_KEY=your-api-key
-     WEBHOOK_SECRET=mySecret
-     ```
+   - Copy `.env.example` to `.env`: `cp .env.example .env`
+   - Edit `.env` and adjust the values.
 
-4. **Browse the API:**
-   - The repository includes an **OpenAPI Specification** file located at: `./docs/openapi.yaml`. This file describes the API's endpoints and can be viewed using tools like **SwaggerUI** or **Redocly**.
-
+4. Browse the API:
+   - The repository includes an **OpenAPI Specification** file located at: `./docs/openapi.yaml`.
    - To explore the API visually, you can use Docker to run the provided tools:
      1. Ensure Docker is installed on your machine.
-     2. Start the servers:
-        ```bash
-        docker compose up
-        ```
-        (If prompted, update the Docker images using `docker compose pull`).
-
-     3. The following servers will be available:
-        - **Swagger UI**: [http://localhost:8080](http://localhost:8080)
-        - **Redocly**: [http://localhost:8090](http://localhost:8090)
-        - **API Server**: [http://localhost:3000](http://localhost:3000) (uses a local database).
-
-     You can use either SwaggerUI or Redocly to browse and understand the API endpoints.
+     2. Start the servers: `docker compose up`.
+     3. The following servers will be available: **Swagger UI**: [http://localhost:8080](http://localhost:8080), **Redocly**: [http://localhost:8090](http://localhost:8090), **API Server**: [http://localhost:3000](http://localhost:3000) (uses a local database).
 
 ---
 
 ## Usage Guide
 
 ### SDK Usage
+
 1. Initialize the SDK:
    ```python
    from src.sdk.client import ApiClient
@@ -121,10 +103,12 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
    print(response)
    ```
    
-#### Comprehensive User Guide for **[SDK Usage](docs/sdk_usage.md)**
-For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usage.md)** 👈.
+#### Comprehensive User Guide for SDK Usage
+
+[![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](docs/sdk_usage.md)
 
 ### Webhook Setup
+
 1. Run the webhook server:
    ```bash
    uvicorn src.server.app:app --reload --port 3010
@@ -132,8 +116,9 @@ For detailed usage and examples, please refer to the **[User Guide](docs/sdk_usa
 
 2. Configure the API to send events to your webhook endpoint (e.g., `http://localhost:3010/webhooks`).
 
-#### Comprehensive User Guide for **[Webhook](docs/webhook_guide.md)**
-For detailed usage and examples, please refer to the **[User Guide](docs/webhook_guide.md)** 👈.
+#### Comprehensive User Guide for Webhook
+
+[![Webhook Documentation](https://img.shields.io/badge/Docs-Webhook%20Guide-blue?style=for-the-badge)](docs/webhook_guide.md)
 
 ---
 
@@ -161,86 +146,76 @@ For detailed usage and examples, please refer to the **[User Guide](docs/webhook
 
 A detailed overview of the project structure, including descriptions of key files and directories.
 
-## Root Directory
-
-```
+```plaintext
+.
 ├── .github/                   # GitHub workflows for CI/CD
+│   └── workflows/
+│       └── ci.yml             # Continuous Integration pipeline configuration
 ├── src/                       # Source code directory
+│   ├── core/                  # Core modules for shared logic
+│   │   ├── __init__.py        # Core module initialization
+│   │   ├── exceptions/        # Exception handling modules
+│   │   │   ├── __init__.py    # Consolidated exception imports
+│   │   │   ├── api.py         # API-specific exceptions
+│   │   │   ├── decorators.py  # Decorators for exception handling
+│   │   │   └── resource.py    # Resource-specific exceptions
+│   │   ├── config.py          # Global configuration file for SDK and server
+│   │   ├── logger.py          # Logging utilities
+│   │   ├── requests.py        # Request helpers for SDK
+│   │   ├── retry.py           # Retry logic for transient failures
+│   │   ├── security.py        # HMAC validation and signature generation
+│   │   └── validators.py      # Common validation logic
+│   ├── schemas/               # Schema definitions for request/response
+│   │   ├── __init__.py        # Schemas initialization
+│   │   ├── contacts.py        # Contact-related schemas
+│   │   ├── errors.py          # Error schemas (aligned with OpenAPI specs)
+│   │   ├── messages.py        # Message-related schemas
+│   │   └── webhook.py         # Webhook payload schemas
+│   ├── sdk/                   # SDK-related functionalities
+│   │   ├── __init__.py        # SDK initialization
+│   │   ├── client.py          # API client for interacting with the server
+│   │   └── features/          # API feature modules
+│   │       ├── __init__.py    # Features initialization
+│   │       ├── contacts.py    # Contacts-related SDK operations
+│   │       └── messages.py    # Messages-related SDK operations
+│   ├── server/                # Webhook server implementation
+│   │   ├── __init__.py        # Server initialization
+│   │   ├── app.py             # Main FastAPI application
+│   │   └── schemas.py         # Schemas specific to the webhook server
 ├── tests/                     # Testing files for unit, integration, and E2E
+│   ├── __init__.py            # Test package initialization
+│   ├── conftest.py            # Pytest fixtures and test setup
+│   ├── e2e/                   # End-to-End (E2E) tests
+│   │   ├── __init__.py        # E2E tests initialization
+│   │   ├── test_contacts_e2e.py   # E2E tests for contacts feature
+│   │   └── test_messages_e2e.py   # E2E tests for messages feature
+│   ├── integration/           # Integration tests
+│   │   ├── __init__.py        # Integration tests initialization
+│   │   ├── test_contacts_integration.py # Integration tests for contacts
+│   │   ├── test_messages_integration.py # Integration tests for messages
+│   │   └── test_webhook.py    # Integration tests for webhook functionality
+│   └── unit/                  # Unit tests for SDK and server
+│       ├── test_sdk/          # SDK-specific unit tests
+│       │   ├── __init__.py    # SDK unit tests initialization
+│       │   ├── test_client.py # Unit tests for API client
+│       │   ├── test_contacts.py   # Unit tests for contacts module
+│       │   └── test_messages.py   # Unit tests for messages module
+│       └── test_server/       # Server-specific unit tests
+│           ├── __init__.py    # Server unit tests initialization
+│           ├── test_route.py  # Unit tests for API routes
+│           └── test_signature_validation.py # Unit tests for signature validation
 ├── venv/                      # Python virtual environment (not versioned)
 ├── .env.example               # Example environment variables
-├── config.py                  # Global configuration file for SDK and server
 ├── docker-compose.yml         # Docker Compose configuration
 ├── pytest.ini                 # Pytest configuration
 ├── requirements.in            # Base Python dependencies
 ├── requirements.txt           # Locked Python dependencies
 ├── README.md                  # Project documentation and usage guide
 ├── docs/                      # Additional documentation
+│   ├── openapi.yaml           # OpenAPI docs
 │   ├── sdk_usage.md           # Comprehensive SDK usage documentation
 │   └── webhook_guide.md       # Webhook-specific documentation
-```
 
----
-
-#### `/src` Directory
-
-The main application source code is organized as follows:
-
-```
-/src
-├── sdk/                        # SDK-related functionalities
-│   ├── __init__.py             # SDK initialization
-│   ├── client.py               # API client for interacting with the server
-│   ├── features/               # API feature modules
-│   │   ├── __init__.py         # Features initialization
-│   │   ├── contacts.py         # Contacts-related SDK operations
-│   │   └── messages.py         # Messages-related SDK operations
-│   ├── schemas/                # Schema definitions for request/response
-│   │   ├── __init__.py         # Schemas initialization
-│   │   ├── contacts.py         # Contact-related schemas
-│   │   └── messages.py         # Message-related schemas
-│   └── utils/                  # Utility modules
-│       ├── __init__.py         # Utilities initialization
-│       ├── exceptions.py       # Custom exceptions for error handling
-│       ├── logger.py           # Logging utilities
-│       ├── requests.py         # Request helpers for SDK
-│       ├── retry.py            # Retry logic for transient failures
-│       └── validators.py       # Validators for request/response data
-├── server/                     # Webhook server implementation
-│   ├── __init__.py             # Server initialization
-│   ├── app.py                  # Main FastAPI application
-│   └── schemas.py              # Schemas specific to the webhook server
-```
-
----
-
-#### `/tests` Directory
-
-The testing framework is organized as follows:
-
-```
-/tests
-├── __init__.py                 # Test package initialization
-├── conftest.py                 # Pytest fixtures and test setup
-├── e2e/                        # End-to-End (E2E) tests
-│   ├── __init__.py             # E2E tests initialization
-│   ├── test_contacts_e2e.py    # E2E tests for contacts feature
-│   └── test_messages_e2e.py    # E2E tests for messages feature
-├── integration/                # Integration tests
-│   ├── __init__.py             # Integration tests initialization
-│   ├── test_contacts_integration.py # Integration tests for contacts
-│   ├── test_end_to_end_workflows.py # Comprehensive workflow tests
-│   ├── test_messages_integration.py # Integration tests for messages
-│   └── test_webhook.py         # Integration tests for webhook functionality
-└── unit/                       # Unit tests for SDK and server
-    ├── test_sdk/               # SDK-specific unit tests
-    │   ├── __init__.py         # SDK unit tests initialization
-    │   ├── test_client.py      # Unit tests for API client
-    │   ├── test_contacts.py    # Unit tests for contacts module
-    │   └── test_messages.py    # Unit tests for messages module
-    └── test_server/            # Server-specific unit tests
-        ├── test_route.py       # Unit tests for API routes
-        └── test_signature_validation.py # Unit tests for signature validation
 ```
 
 ---

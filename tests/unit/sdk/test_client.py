@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from src.sdk.client import ApiClient
-from src.common.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError
-from config import settings
+from src.core.exceptions import UnauthorizedError, NotFoundError, ServerError, ApiError
+from src.core.config import settings
 
 
 @pytest.fixture

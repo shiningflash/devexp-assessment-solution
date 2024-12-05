@@ -1,12 +1,13 @@
 import json
 
 from fastapi import FastAPI, HTTPException, Header, Request
-from config import settings
-from ..sdk.client import ApiClient
-from .schemas import WebhookPayload
-from ..sdk.features.messages import Messages
-from src.common.validators import verify_signature
-from src.common.logger import webhook_logger as logger
+from src.core.config import settings
+from src.sdk.client import ApiClient
+from src.schemas.webhook import WebhookPayload
+from src.sdk.features.messages import Messages
+from src.core.security import verify_signature
+from src.core.logger import webhook_logger as logger
+from src.schemas.errors import UnauthorizedError, BadRequestError, ServerError
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -40,11 +41,19 @@ async def handle_webhook(
         print(f"Processed webhook payload: {payload.model_dump()}")
 
         return {"message": "Webhook processed successfully."}
-
+    
     except ValueError as e:
-        logger.error(f"Signature validation failed: {str(e)}")
-        raise HTTPException(status_code=401, detail="Invalid signature.")
-
-    except Exception as e:
-        logger.error(f"Error processing webhook: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal Server Error.")
+        raise HTTPException(
+            status_code=400,
+            detail=BadRequestError(error=str(e)).model_dump()
+        )
+    except UnauthorizedError as e:
+        raise HTTPException(
+            status_code=401,
+            detail=e.message
+        )
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail=ServerError(message="An unexpected error occurred").model_dump()
+        )

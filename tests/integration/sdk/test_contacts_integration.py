@@ -1,5 +1,5 @@
 import pytest
-from src.common.exceptions import NotFoundError
+from src.core.exceptions import NotFoundError
 
 
 def test_create_contact_success(contacts, mock_api_client):

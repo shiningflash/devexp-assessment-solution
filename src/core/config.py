@@ -1,6 +1,6 @@
 from pydantic import Field, field_validator, ConfigDict
 from pydantic_settings import BaseSettings
-from src.common.logger import logger
+from src.core.logger import logger
 
 
 class Settings(BaseSettings):
