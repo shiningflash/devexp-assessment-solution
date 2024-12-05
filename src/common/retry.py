@@ -1,7 +1,7 @@
 import time
 from functools import wraps
-from ..utils.logger import logger
-from ..utils.exceptions import TransientError
+from .logger import logger
+from .exceptions import TransientError
 
 
 def retry(max_retries: int = 3, backoff: int = 2, retry_on: tuple = (502, 503)):
