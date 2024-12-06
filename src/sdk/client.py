@@ -35,7 +35,10 @@ class ApiClient:
             ServerError: For other 500+ server errors.
             ApiError: Generic API error for unexpected status codes.
         """
-        if response.status_code == 401:
+        if response.status_code == 204:  # No Content
+            logger.info("No content returned. Operation successful.")
+            return
+        elif response.status_code == 401:
             logger.error(f"Unauthorized: {response.text}")
             raise UnauthorizedError("Unauthorized. Check your API key.")
         elif response.status_code == 404:
@@ -77,6 +80,11 @@ class ApiClient:
         logger.info(f"Sending {method} request to {url} with headers {headers} and payload {kwargs}")
         response = requests.request(method, url, headers=headers, **kwargs)
         logger.info(f"Received response with status {response.status_code}")
+        
+        # Handle deletion api
+        if response.status_code == 204:
+            logger.info(f"Item successfully deleted.")
+            return None
 
         # Handle API errors
         self._handle_api_errors(response)

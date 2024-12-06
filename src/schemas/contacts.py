@@ -33,6 +33,8 @@ class CreateContactRequest(BaseModel):
             raise ValueError("Phone numbers must start with a '+' prefix.")
         if not value[1:].isdigit():
             raise ValueError("Phone numbers must contain only digits after the '+' prefix.")
+        if len(value) < 10 or len(value) > 15:
+            raise ValueError("Phone numbers must be between 10 and 15 characters.")
         return value
 
 
