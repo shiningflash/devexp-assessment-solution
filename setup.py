@@ -6,9 +6,10 @@ setup(
     description="A Python SDK for managing messages and contacts, with webhook integration.",
     author="Amirul Islam",
     author_email="amirulislamalmamun@gmail.com",
-    url="https://github.com/your-repo/messaging-sdk",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
+    url="https://github.com/shiningflash/messaging-sdk",
+    packages=find_packages(where="src"),  # Discover packages under "src"
+    package_dir={"": "src"},             # Specify that all packages live under "src"
+    include_package_data=True,           # Include non-Python files specified in MANIFEST.in
     install_requires=[
         "requests",
         "python-dotenv",
@@ -37,10 +38,7 @@ setup(
         ],
     },
     entry_points={
-        "console_scripts": [
-            # Example entry point (if applicable)
-            # "messaging-sdk-cli = messaging_sdk.cli:main",
-        ]
+        "console_scripts": [],
     },
     classifiers=[
         "Programming Language :: Python :: 3.8",

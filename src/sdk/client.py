@@ -35,7 +35,10 @@ class ApiClient:
             ServerError: For other 500+ server errors.
             ApiError: Generic API error for unexpected status codes.
         """
-        if response.status_code == 401:
+        if response.status_code == 204:  # No Content
+            logger.info("No content returned. Operation successful.")
+            return
+        elif response.status_code == 401:
             logger.error(f"Unauthorized: {response.text}")
             raise UnauthorizedError("Unauthorized. Check your API key.")
         elif response.status_code == 404:
