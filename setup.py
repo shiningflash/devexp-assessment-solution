@@ -1,12 +1,19 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="messaging-sdk",
+    name="messaging-py-sdk",
     version="2.1.0",
     description="A Python SDK for managing messages and contacts, with webhook integration.",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     author="Amirul Islam",
     author_email="amirulislamalmamun@gmail.com",
     url="https://github.com/shiningflash/messaging-sdk",
+    project_urls={
+        "Documentation": "https://github.com/shiningflash/messaging-sdk/blob/main/README.md",
+        "Source Code": "https://github.com/shiningflash",
+        "Issue Tracker": "https://github.com/shiningflash/messaging-sdk/issues",
+    },
     packages=find_packages(where="src"),  # Discover packages under "src"
     package_dir={"": "src"},             # Specify that all packages live under "src"
     include_package_data=True,           # Include non-Python files specified in MANIFEST.in
@@ -50,5 +57,8 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
+    keywords="messaging sdk python api contacts",
+    license="Apache",
     python_requires=">=3.8",
+    zip_safe=False,
 )
