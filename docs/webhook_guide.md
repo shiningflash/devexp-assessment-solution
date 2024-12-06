@@ -137,6 +137,15 @@ async def handle_webhook(
 
 ## Testing the Webhook
 
+Test the webhook by sending a simulated payload to it:
+
+```bash
+curl -X POST http://localhost:3010/webhooks \
+     -H "Authorization: Bearer <calculated-signature>" \
+     -d '{"id": "msg123", "status": "delivered", "deliveredAt": "2024-11-30T12:00:00Z"}'
+```
+
+
 ### Unit Tests
 
 Run unit tests to verify webhook functionality:
