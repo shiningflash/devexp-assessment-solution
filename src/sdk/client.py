@@ -80,6 +80,11 @@ class ApiClient:
         logger.info(f"Sending {method} request to {url} with headers {headers} and payload {kwargs}")
         response = requests.request(method, url, headers=headers, **kwargs)
         logger.info(f"Received response with status {response.status_code}")
+        
+        # Handle deletion api
+        if response.status_code == 204:
+            logger.info(f"Item successfully deleted.")
+            return None
 
         # Handle API errors
         self._handle_api_errors(response)
