@@ -2,7 +2,7 @@
 
 A Python SDK designed to simplify interaction with the messaging API and webhook functionalities. It ensures seamless message management, automatic signature validation, and provides a robust foundation for developing scalable messaging applications.
 
-[![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](docs/sdk_usage.md) [![Webhook Documentation](https://img.shields.io/badge/Docs-Webhook%20Guide-blue?style=for-the-badge)](docs/webhook_guide.md)
+[![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](https://github.com/shiningflash/messaging-sdk/blob/main/docs/sdk_usage.md) [![Webhook Documentation](https://img.shields.io/badge/Docs-Webhook%20Guide-blue?style=for-the-badge)](https://github.com/shiningflash/messaging-sdk/blob/main/docs/webhook_guide.md)
 
 ---
 
@@ -138,7 +138,7 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
 
 #### Comprehensive User Guide for SDK Usage
 
-[![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](docs/sdk_usage.md)
+[![SDK Usage Documentation](https://img.shields.io/badge/Docs-SDK%20Usage%20Guide-blue?style=for-the-badge)](https://github.com/shiningflash/messaging-sdk/blob/main/docs/sdk_usage.md)
 
 ---
 
@@ -153,7 +153,7 @@ The **Messaging SDK** is a Python library that allows developers to interact wit
 
 #### Comprehensive User Guide for Webhook
 
-[![Webhook Documentation](https://img.shields.io/badge/Docs-Webhook%20Guide-blue?style=for-the-badge)](docs/webhook_guide.md)
+[![Webhook Documentation](https://img.shields.io/badge/Docs-Webhook%20Guide-blue?style=for-the-badge)](https://github.com/shiningflash/messaging-sdk/blob/main/docs/webhook_guide.md)
 
 ---
 

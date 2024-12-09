@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="messaging-py-sdk",
-    version="2.1.0",
+    version="2.1.2",
     description="A Python SDK for managing messages and contacts, with webhook integration.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
