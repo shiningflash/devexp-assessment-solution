@@ -35,22 +35,19 @@ class ApiClient:
             ServerError: For other 500+ server errors.
             ApiError: Generic API error for unexpected status codes.
         """
-        if response.status_code == 204:  # No Content
-            logger.info("No content returned. Operation successful.")
-            return
-        elif response.status_code == 401:
+        if response.status_code == 401:
             logger.error(f"Unauthorized: {response.text}")
             raise UnauthorizedError("Unauthorized. Check your API key.")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             logger.error(f"Resource Not Found: {response.text}")
             raise NotFoundError("Resource not found.")
-        elif response.status_code in (502, 503):
+        if response.status_code in (502, 503):
             logger.warning(f"Transient Error: {response.text}")
             raise TransientError("Transient server error. Please retry.", status_code=response.status_code)
-        elif response.status_code >= 500:
+        if response.status_code >= 500:
             logger.error(f"Server Error: {response.text}")
             raise ServerError("Server error. Please try again later.")
-        elif not response.ok:
+        if not response.ok:
             logger.error(f"Unhandled API Error: {response.status_code} - {response.text}")
             raise ApiError(f"Unhandled API Error: {response.status_code}: {response.text}")
 
