@@ -59,14 +59,6 @@ class CreateMessageRequest(BaseModel):
         json_schema_extra={"example": "+0987654321"}
     )
 
-    @field_validator("from_sender")
-    def validate_phone_number(cls, value):
-        if not value.startswith("+"):
-            raise ValueError("Phone numbers must include the '+' prefix.")
-        if not value[1:].isdigit():
-            raise ValueError("Phone numbers must contain only digits after the '+' prefix.")
-        return value
-
 
 class Message(BaseModel):
     """
